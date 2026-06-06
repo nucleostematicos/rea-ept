@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REA·EPT — Repositório de Recursos Educacionais Abertos</title>
+<meta name="description" content="Repositório de Recursos Educacionais Abertos para Educação Profissional e Tecnológica - IFPI">
+
+<!-- Open Graph para compartilhamento -->
+<meta property="og:title" content="REA·EPT — Repositório de Recursos Educacionais Abertos">
+<meta property="og:description" content="Repositório de Recursos Educacionais Abertos para EPT - Instituto Federal do Piauí">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --verde:    #00875A;
+    --verde-vivo: #00C48C;
+    --verde-escuro: #005C3D;
+    --amarelo:  #FFD600;
+    --azul:     #003366;
+    --azul-med: #0055A4;
+    --cinza-f:  #F4F6F2;
+    --cinza-m:  #C8D2CC;
+    --cinza-e:  #3A3F36;
+    --branco:   #FFFFFF;
+    --sombra:   0 4px 28px rgba(0,87,60,.12);
+    --r:        14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cinza-f);
+    color: var(--cinza-e);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  header {
+    background: var(--azul);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,.25);
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+  }
+
+  .header-logo {
+    width: 42px; height: 42px;
+    background: var(--verde-vivo);
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--azul);
+    letter-spacing: -.5px;
+    flex-shrink: 0;
+  }
+
+  .header-text h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--branco);
+    line-height: 1.2;
+  }
+  .header-text span {
+    font-size: .72rem;
+    color: var(--cinza-m);
+    font-weight: 300;
+    letter-spacing: .3px;
+  }
+
+  nav {
+    display: flex;
+    gap: .4rem;
+  }
+  nav button {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,.2);
+    color: rgba(255,255,255,.85);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem;
+    padding: .42rem .9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  nav button:hover, nav button.active {
+    background: var(--verde-vivo);
+    border-color: var(--verde-vivo);
+    color: var(--azul);
+    font-weight: 600;
+  }
+
+  /* ── HERO ────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--azul) 0%, var(--verde-escuro) 100%);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(0,196,140,.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255,214,0,.08) 0%, transparent 40%);
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(0,196,140,.18);
+    border: 1px solid var(--verde-vivo);
+    color: var(--verde-vivo);
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    padding: .35rem .9rem;
+    border-radius: 100px;
+    margin-bottom: 1.4rem;
+    text-transform: uppercase;
+  }
+  .hero h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: var(--branco);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .hero h2 em {
+    font-style: normal;
+    color: var(--verde-vivo);
+  }
+  .hero p {
+    color: rgba(255,255,255,.75);
+    max-width: 620px;
+    margin: 0 auto 2rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-actions {
+    display: flex;
+    gap: .9rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--verde-vivo);
+    color: var(--azul);
+    border: none;
+    padding: .75rem 1.8rem;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: 0 4px 20px rgba(0,196,140,.35);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,196,140,.45);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--branco);
+    border: 1.5px solid rgba(255,255,255,.4);
+    padding: .75rem 1.8rem;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-outline:hover {
+    border-color: var(--branco);
+    background: rgba(255,255,255,.08);
+  }
+
+  /* ── STATS ───────────────────────────────── */
+  .stats-bar {
+    background: var(--branco);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-bottom: 2px solid var(--cinza-f);
+    overflow-x: auto;
+  }
+  .stat-item {
+    padding: 1.2rem 2.5rem;
+    text-align: center;
+    border-right: 1px solid var(--cinza-f);
+    flex-shrink: 0;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--verde);
+    display: block;
+  }
+  .stat-label {
+    font-size: .75rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+  }
+
+  /* ── MAIN LAYOUT ─────────────────────────── */
+  main { max-width: 1240px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+  /* ── SECTION TABS ────────────────────────── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── FILTROS / BUSCA ─────────────────────── */
+  .search-bar {
+    display: flex;
+    gap: .8rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-input-wrap {
+    flex: 1;
+    min-width: 260px;
+    position: relative;
+  }
+  .search-input-wrap input {
+    width: 100%;
+    padding: .75rem 1rem .75rem 2.8rem;
+    border: 2px solid var(--cinza-m);
+    border-radius: var(--r);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    background: var(--branco);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .search-input-wrap input:focus { border-color: var(--verde); }
+  .search-input-wrap .icon {
+    position: absolute; left: .9rem; top: 50%; transform: translateY(-50%);
+    color: #999; font-size: 1rem;
+  }
+  .filter-select {
+    padding: .72rem 1.1rem;
+    border: 2px solid var(--cinza-m);
+    border-radius: var(--r);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .88rem;
+    background: var(--branco);
+    outline: none;
+    cursor: pointer;
+    min-width: 150px;
+    transition: border-color .2s;
+  }
+  .filter-select:focus { border-color: var(--verde); }
+
+  /* ── SECTION HEADING ─────────────────────── */
+  .sec-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .sec-head h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--azul);
+  }
+  .sec-head h3 span {
+    font-size: .85rem;
+    font-weight: 400;
+    color: #999;
+    font-family: 'DM Sans', sans-serif;
+    margin-left: .5rem;
+  }
+
+  /* ── CARDS GRID ──────────────────────────── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.3rem;
+  }
+
+  .rea-card {
+    background: var(--branco);
+    border-radius: var(--r);
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    border: 1.5px solid transparent;
+    transition: all .25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .rea-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--verde-vivo);
+    box-shadow: 0 12px 36px rgba(0,87,60,.18);
+  }
+
+  .card-banner {
+    height: 7px;
+  }
+  .card-banner.video   { background: linear-gradient(90deg, #E53935, #FF6F00); }
+  .card-banner.audio   { background: linear-gradient(90deg, #8E24AA, #5C6BC0); }
+  .card-banner.pdf     { background: linear-gradient(90deg, #D32F2F, #E64A19); }
+  .card-banner.slides  { background: linear-gradient(90deg, #F57C00, #FBC02D); }
+  .card-banner.infog   { background: linear-gradient(90deg, #00897B, #26A69A); }
+  .card-banner.site    { background: linear-gradient(90deg, #1565C0, #0288D1); }
+  .card-banner.game    { background: linear-gradient(90deg, #388E3C, var(--verde-vivo)); }
+  .card-banner.outros  { background: linear-gradient(90deg, #546E7A, #90A4AE); }
+
+  .card-body {
+    padding: 1.3rem 1.4rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: .4rem;
+    flex-wrap: wrap;
+    margin-bottom: .75rem;
+  }
+  .tag {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    padding: .22rem .6rem;
+    border-radius: 100px;
+  }
+  .tag-tipo   { background: #E8F5E9; color: var(--verde-escuro); }
+  .tag-area   { background: #E3F2FD; color: var(--azul-med); }
+  .tag-nivel  { background: #FFF8E1; color: #F57F17; }
+  .tag-cc     { background: #F3E5F5; color: #6A1B9A; }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cinza-e);
+    line-height: 1.35;
+    margin-bottom: .5rem;
+  }
+
+  .card-author {
+    font-size: .82rem;
+    color: #888;
+    margin-bottom: .6rem;
+    font-style: italic;
+  }
+
+  .card-desc {
+    font-size: .87rem;
+    color: #555;
+    line-height: 1.6;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: .8rem;
+    border-top: 1px solid var(--cinza-f);
+    font-size: .78rem;
+    color: #999;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .card-meta span { display: flex; align-items: center; gap: .3rem; }
+
+  .card-actions {
+    display: flex;
+    gap: .5rem;
+    margin-top: 1rem;
+  }
+  .btn-sm {
+    flex: 1;
+    padding: .5rem .7rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+    border: none;
+  }
+  .btn-sm.ver {
+    background: var(--azul);
+    color: var(--branco);
+  }
+  .btn-sm.ver:hover { background: var(--azul-med); }
+  .btn-sm.baixar {
+    background: var(--cinza-f);
+    color: var(--cinza-e);
+    border: 1.5px solid var(--cinza-m);
+  }
+  .btn-sm.baixar:hover { background: var(--cinza-m); }
+
+  /* ── EMPTY STATE ─────────────────────────── */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #bbb;
+  }
+  .empty-state .icon { font-size: 3.5rem; margin-bottom: 1rem; }
+  .empty-state p { font-size: 1rem; }
+
+  /* ── MODAL BACKDROP ──────────────────────── */
+  .modal-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,30,20,.6);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    place-items: center;
+  }
+  .modal-backdrop.open { display: grid; }
+
+  .modal {
+    background: var(--branco);
+    border-radius: 20px;
+    width: min(720px, 95vw);
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 30px 80px rgba(0,0,0,.3);
+    animation: slideUp .3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, var(--azul), var(--verde-escuro));
+    padding: 2rem 2rem 1.5rem;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+  }
+  .modal-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    color: var(--branco);
+    font-weight: 800;
+  }
+  .modal-header p {
+    font-size: .85rem;
+    color: rgba(255,255,255,.7);
+    margin-top: .4rem;
+    font-weight: 300;
+  }
+  .modal-close {
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    background: rgba(255,255,255,.15);
+    border: none; color: var(--branco);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: background .2s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,.3); }
+
+  .modal-body { padding: 2rem; }
+
+  /* ── FORM ────────────────────────────────── */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  .form-group { display: flex; flex-direction: column; gap: .4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--cinza-e);
+    letter-spacing: .2px;
+  }
+  .form-group label .req { color: #E53935; margin-left: 2px; }
+  .form-group label .tip {
+    font-weight: 300;
+    color: #999;
+    font-size: .77rem;
+    margin-left: .3rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: .7rem 1rem;
+    border: 1.5px solid #DDD;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    outline: none;
+    background: var(--cinza-f);
+    transition: border-color .2s, background .2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--verde);
+    background: var(--branco);
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+
+  .form-section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--azul);
+    border-bottom: 2px solid var(--cinza-f);
+    padding-bottom: .5rem;
+    margin: 1.5rem 0 .3rem;
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  /* Upload zone */
+  .upload-zone {
+    grid-column: 1 / -1;
+    border: 2.5px dashed var(--cinza-m);
+    border-radius: 14px;
+    padding: 2.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    background: var(--cinza-f);
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.dragging {
+    border-color: var(--verde);
+    background: #E8F5E9;
+  }
+  .upload-zone input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+    width: 100%; height: 100%;
+  }
+  .upload-icon { font-size: 2.5rem; margin-bottom: .6rem; }
+  .upload-zone p { font-size: .9rem; color: #666; }
+  .upload-zone strong { color: var(--verde); }
+  .upload-formats {
+    font-size: .78rem;
+    color: #aaa;
+    margin-top: .4rem;
+  }
+  .upload-preview {
+    display: none;
+    align-items: center;
+    gap: .7rem;
+    background: #E8F5E9;
+    border: 1.5px solid var(--verde-vivo);
+    border-radius: 10px;
+    padding: .7rem 1rem;
+    margin-top: .8rem;
+    font-size: .88rem;
+    color: var(--verde-escuro);
+    font-weight: 500;
+  }
+  .upload-preview.show { display: flex; }
+
+  /* URL alternativa */
+  .or-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #bbb;
+    font-size: .82rem;
+  }
+  .or-divider::before, .or-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--cinza-m);
+  }
+
+  /* License pills */
+  .license-grid {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+  }
+  .license-pill input[type=radio] { display: none; }
+  .license-pill label {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .45rem 1rem;
+    border: 1.5px solid var(--cinza-m);
+    border-radius: 100px;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    color: #666;
+    background: var(--branco);
+  }
+  .license-pill input[type=radio]:checked + label {
+    border-color: var(--verde);
+    background: #E8F5E9;
+    color: var(--verde-escuro);
+  }
+
+  /* Submit */
+  .form-submit-row {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: .8rem;
+    justify-content: flex-end;
+    margin-top: .8rem;
+    padding-top: 1.2rem;
+    border-top: 1.5px solid var(--cinza-f);
+  }
+  .btn-cancel {
+    padding: .7rem 1.5rem;
+    background: var(--cinza-f);
+    border: 1.5px solid var(--cinza-m);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-cancel:hover { background: var(--cinza-m); }
+  .btn-submit {
+    padding: .7rem 2rem;
+    background: var(--verde);
+    color: var(--branco);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .btn-submit:hover { background: var(--verde-vivo); color: var(--azul); transform: translateY(-1px); }
+
+  /* ── SUCCESS TOAST ───────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--verde);
+    color: var(--branco);
+    padding: 1rem 1.6rem;
+    border-radius: 14px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: .95rem;
+    box-shadow: 0 8px 28px rgba(0,87,60,.35);
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    z-index: 999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ── SOBRE / SOBRE PAGE ──────────────────── */
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 680px) {
+    .sobre-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+  .info-card {
+    background: var(--branco);
+    border-radius: var(--r);
+    padding: 1.8rem;
+    box-shadow: var(--sombra);
+  }
+  .info-card .ic-head {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin-bottom: 1.2rem;
+  }
+  .ic-icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .info-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--azul);
+  }
+  .info-card p {
+    font-size: .88rem;
+    line-height: 1.7;
+    color: #555;
+  }
+  .info-card ul {
+    list-style: none;
+    margin-top: .6rem;
+  }
+  .info-card ul li {
+    font-size: .87rem;
+    color: #555;
+    line-height: 1.6;
+    padding: .3rem 0;
+    border-bottom: 1px solid var(--cinza-f);
+    display: flex;
+    align-items: flex-start;
+    gap: .5rem;
+  }
+  .info-card ul li::before {
+    content: '▸';
+    color: var(--verde);
+    font-size: .8rem;
+    flex-shrink: 0;
+    margin-top: .15rem;
+  }
+
+  .about-hero {
+    background: linear-gradient(135deg, var(--azul), var(--verde-escuro));
+    border-radius: var(--r);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--branco);
+  }
+  .about-hero h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: .8rem;
+  }
+  .about-hero p {
+    font-size: .95rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,.82);
+    font-weight: 300;
+    max-width: 700px;
+  }
+
+  .team-card {
+    background: var(--branco);
+    border-radius: var(--r);
+    padding: 1.5rem;
+    box-shadow: var(--sombra);
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .team-avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--verde), var(--azul-med));
+    display: grid; place-items: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--branco);
+    flex-shrink: 0;
+    border: 3px solid var(--verde-vivo);
+  }
+  .team-info h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--azul);
+    margin-bottom: .25rem;
+  }
+  .team-info p {
+    font-size: .83rem;
+    color: #777;
+    line-height: 1.6;
+  }
+  .team-role {
+    display: inline-block;
+    background: #E8F5E9;
+    color: var(--verde-escuro);
+    font-size: .72rem;
+    font-weight: 600;
+    padding: .2rem .7rem;
+    border-radius: 100px;
+    margin-bottom: .3rem;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer {
+    background: var(--azul);
+    color: rgba(255,255,255,.7);
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 4rem;
+    font-size: .82rem;
+    line-height: 1.8;
+  }
+  footer strong { color: var(--verde-vivo); }
+
+  /* ── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 600px) {
+    nav { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .sobre-grid { grid-template-columns: 1fr; }
+    .stat-item { padding: 1rem 1.4rem; }
+  }
+
+  /* ── BADGE TIPO ICON ─────────────────────── */
+  .tipo-icon {
+    font-size: 1.3rem;
+    margin-right: .3rem;
+  }
+
+  /* ── PROGRESS BAR ────────────────────────── */
+  .progress-bar-wrap {
+    height: 5px;
+    background: var(--cinza-f);
+    border-radius: 3px;
+    margin-top: .4rem;
+    overflow: hidden;
+    display: none;
+  }
+  .progress-bar-wrap.show { display: block; }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--verde), var(--verde-vivo));
+    border-radius: 3px;
+    width: 0%;
+    transition: width .4s ease;
+  }
+
+  /* ── DETAIL MODAL ────────────────────────── */
+  .detail-hero {
+    background: linear-gradient(135deg, var(--azul), var(--verde-escuro));
+    border-radius: 20px 20px 0 0;
+    padding: 2rem;
+    color: var(--branco);
+    position: relative;
+  }
+  .detail-hero h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: .5rem;
+    padding-right: 2.5rem;
+  }
+  .detail-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: .8rem;
+  }
+  .meta-badge {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    color: rgba(255,255,255,.9);
+    font-size: .78rem;
+    padding: .25rem .7rem;
+    border-radius: 100px;
+    display: flex; align-items: center; gap: .3rem;
+  }
+  .detail-body { padding: 1.8rem 2rem; }
+  .detail-section { margin-bottom: 1.5rem; }
+  .detail-section h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--azul);
+    margin-bottom: .5rem;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: .78rem;
+  }
+  .detail-section p, .detail-section a {
+    font-size: .9rem;
+    color: #444;
+    line-height: 1.7;
+  }
+  .detail-section a { color: var(--azul-med); text-decoration: underline; }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .detail-field {
+    background: var(--cinza-f);
+    border-radius: 10px;
+    padding: .7rem 1rem;
+  }
+  .detail-field .df-label {
+    font-size: .72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    color: #999;
+    margin-bottom: .2rem;
+  }
+  .detail-field .df-value {
+    font-size: .88rem;
+    color: var(--cinza-e);
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ───────────────────────────────────── -->
+<header>
+  <div class="header-brand">
+    <div class="header-logo">REA</div>
+    <div class="header-text">
+      <h1>Repositório REA·EPT</h1>
+      <span>Instituto Federal do Piauí — IFPI</span>
+    </div>
+  </div>
+  <nav>
+    <button class="active" onclick="showSection('repositorio', this)">📚 Repositório</button>
+    <button onclick="showSection('sobre', this)">ℹ️ Sobre</button>
+  </nav>
+</header>
+
+<!-- ── HERO ─────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-tag">🔓 Educação Aberta &amp; Colaborativa</div>
+  <h2>Recursos Educacionais Abertos<br>para a <em>Educação Profissional</em></h2>
+  <p>Plataforma colaborativa da disciplina <strong>Produção de Materiais Didáticos Digitais</strong> — Especialização em EaD para EPT · IFPI</p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="openCadastro()">➕ Cadastrar meu REA</button>
+    <button class="btn-outline" onclick="showSection('sobre', document.querySelectorAll('nav button')[1])">Saiba mais</button>
+  </div>
+</div>
+
+<!-- ── STATS ─────────────────────────────────────── -->
+<div class="stats-bar" id="statsBar">
+  <div class="stat-item"><span class="stat-num" id="statTotal">0</span><span class="stat-label">REA publicados</span></div>
+  <div class="stat-item"><span class="stat-num" id="statAuthors">0</span><span class="stat-label">Autores/as</span></div>
+  <div class="stat-item"><span class="stat-num" id="statFormats">8</span><span class="stat-label">Formatos suportados</span></div>
+  <div class="stat-item"><span class="stat-num">CC</span><span class="stat-label">Licenças abertas</span></div>
+</div>
+
+<!-- ── MAIN ──────────────────────────────────────── -->
+<main>
+
+  <!-- ══ SEÇÃO REPOSITÓRIO ══ -->
+  <div id="sec-repositorio" class="section active">
+
+    <!-- Busca + filtros -->
+    <div class="search-bar">
+      <div class="search-input-wrap">
+        <span class="icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Buscar por título, autor, palavra-chave..." oninput="filterCards()">
+      </div>
+      <select class="filter-select" id="filterTipo" onchange="filterCards()">
+        <option value="">Todos os formatos</option>
+        <option value="Vídeo">🎬 Vídeo</option>
+        <option value="Podcast/Áudio">🎙 Podcast/Áudio</option>
+        <option value="PDF/E-book">📄 PDF/E-book</option>
+        <option value="Apresentação">📊 Apresentação</option>
+        <option value="Infográfico">🖼 Infográfico</option>
+        <option value="Site/WebApp">🌐 Site/WebApp</option>
+        <option value="Jogo Educacional">🎮 Jogo Educacional</option>
+        <option value="Outros">📁 Outros</option>
+      </select>
+      <select class="filter-select" id="filterArea" onchange="filterCards()">
+        <option value="">Todas as áreas</option>
+        <option>Tecnologia da Informação</option>
+        <option>Saúde</option>
+        <option>Agropecuária</option>
+        <option>Construção Civil</option>
+        <option>Gestão e Negócios</option>
+        <option>Ambiente e Saúde</option>
+        <option>Produção Industrial</option>
+        <option>Turismo e Hospitalidade</option>
+        <option>Outras</option>
+      </select>
+    </div>
+
+    <!-- Heading -->
+    <div class="sec-head">
+      <h3>Recursos disponíveis <span id="countLabel">— 0 resultados</span></h3>
+      <button class="btn-primary" onclick="openCadastro()" style="font-size:.88rem;padding:.55rem 1.2rem">➕ Cadastrar REA</button>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards-grid" id="cardsGrid">
+      <!-- Preenchido via JS -->
+    </div>
+
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="icon">📭</div>
+      <p>Nenhum recurso encontrado.<br>Seja o/a primeiro/a a cadastrar um REA!</p>
+    </div>
+
+  </div><!-- /sec-repositorio -->
+
+  <!-- ══ SEÇÃO SOBRE ══ -->
+  <div id="sec-sobre" class="section">
+
+    <div class="about-hero">
+      <h3>🎓 Sobre o Repositório REA·EPT</h3>
+      <p>Este repositório foi criado como espaço colaborativo e aberto para estudantes da disciplina <strong>Produção de Materiais Didáticos Digitais (MDD)</strong>, vinculada ao curso de <strong>Especialização em Educação a Distância para a Educação Profissional e Tecnológica</strong> do Instituto Federal do Piauí — IFPI. Os Recursos Educacionais Abertos aqui publicados podem ser acessados, adaptados e compartilhados livremente, respeitando as licenças Creative Commons indicadas por cada autor/a.</p>
+    </div>
+
+    <div class="sobre-grid">
+      <div class="info-card">
+        <div class="ic-head">
+          <div class="ic-icon" style="background:#E8F5E9;">📖</div>
+          <h4>O que são REA?</h4>
+        </div>
+        <p>Recursos Educacionais Abertos (REA) são materiais de ensino, aprendizagem e pesquisa disponibilizados com licenças abertas que permitem uso, adaptação e redistribuição. Podem incluir cursos, livros didáticos, vídeos, testes, softwares e quaisquer outras ferramentas pedagógicas.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-head">
+          <div class="ic-icon" style="background:#E3F2FD;">🏭</div>
+          <h4>Foco na EPT</h4>
+        </div>
+        <p>A Educação Profissional e Tecnológica (EPT) visa preparar cidadãos para o mundo do trabalho com formação integral. Este repositório reúne materiais voltados especificamente para os eixos tecnológicos da EPT, contextualizados para a realidade brasileira e especialmente nordestina.</p>
+      </div>
+      <div class="info-card">
+        <div class="ic-head">
+          <div class="ic-icon" style="background:#FFF8E1;">🔓</div>
+          <h4>Formatos aceitos</h4>
+        </div>
+        <ul>
+          <li>Vídeo (MP4, YouTube, Vimeo)</li>
+          <li>Podcast e áudio (MP3, Spotify)</li>
+          <li>PDF e E-books</li>
+          <li>Apresentações (PPTX, Google Slides)</li>
+          <li>Infográficos e imagens educativas</li>
+          <li>Sites, WebApps e HTML5</li>
+          <li>Jogos educacionais digitais</li>
+          <li>Mapas mentais e mind maps</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="ic-head">
+          <div class="ic-icon" style="background:#F3E5F5;">⚖️</div>
+          <h4>Licenças Creative Commons</h4>
+        </div>
+        <ul>
+          <li>CC BY — Atribuição</li>
+          <li>CC BY-SA — Atribuição-CompartilhaIgual</li>
+          <li>CC BY-ND — Atribuição-SemDerivações</li>
+          <li>CC BY-NC — Atribuição-NãoComercial</li>
+          <li>CC BY-NC-SA — NC + CompartilhaIgual</li>
+          <li>CC BY-NC-ND — NC + SemDerivações</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Equipe -->
+    <div class="sec-head"><h3>Orientação &amp; Autoria</h3></div>
+
+    <div class="team-card">
+      <div class="team-avatar">ARS</div>
+      <div class="team-info">
+        <span class="team-role">Orientadora · Docente</span>
+        <h4>Profa. Dra. Adriana Rocha Silva</h4>
+        <p>Professora responsável pela disciplina Produção de Materiais Didáticos Digitais, curso de Especialização em EaD para EPT — Instituto Federal do Piauí (IFPI). Pesquisadora em tecnologias educacionais, letramento digital e formação de professores para a educação a distância.</p>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar">🎓</div>
+      <div class="team-info">
+        <span class="team-role">Autores/as</span>
+        <h4>Estudantes da Especialização EaD para EPT</h4>
+        <p>Os Recursos Educacionais Abertos publicados neste repositório são produzidos pelos/as estudantes matriculados/as na disciplina MDD, sob orientação pedagógica da Profa. Dra. Adriana Rocha Silva, como produto final da disciplina.</p>
+      </div>
+    </div>
+
+    <!-- Metadados Dublin Core -->
+    <div class="sec-head" style="margin-top:2rem"><h3>📋 Padrão de Metadados</h3></div>
+    <div class="info-card">
+      <div class="ic-head">
+        <div class="ic-icon" style="background:#E3F2FD;">🗂</div>
+        <h4>Dublin Core + LOM (Learning Object Metadata)</h4>
+      </div>
+      <p style="margin-bottom:.8rem">Este repositório utiliza metadados baseados no padrão Dublin Core enriquecido com elementos do LOM para garantir interoperabilidade e descoberta dos recursos na web e em outros repositórios:</p>
+      <ul>
+        <li><strong>dc:title</strong> — Título do recurso</li>
+        <li><strong>dc:creator</strong> — Nome do/a autor/a</li>
+        <li><strong>dc:description</strong> — Descrição e resumo pedagógico</li>
+        <li><strong>dc:subject</strong> — Eixo tecnológico / área do conhecimento</li>
+        <li><strong>dc:type</strong> — Formato/tipo do recurso</li>
+        <li><strong>dc:language</strong> — Idioma do recurso</li>
+        <li><strong>dc:date</strong> — Data de publicação</li>
+        <li><strong>dc:rights</strong> — Licença Creative Commons</li>
+        <li><strong>dc:identifier</strong> — URL de acesso ao recurso</li>
+        <li><strong>lom:educationalLevel</strong> — Nível de ensino</li>
+        <li><strong>lom:typicalLearningTime</strong> — Tempo estimado de uso</li>
+        <li><strong>lom:keyword</strong> — Palavras-chave para busca</li>
+      </ul>
+    </div>
+
+  </div><!-- /sec-sobre -->
+
+</main>
+
+<!-- ── MODAL CADASTRO COM IFRAME ─────────────────── -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModalIfOutside(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="width:min(860px,97vw);max-height:94vh;display:flex;flex-direction:column;">
+    <div class="modal-header" style="flex-shrink:0;">
+      <h2 id="modalTitle">➕ Cadastrar Recurso Educacional Aberto</h2>
+      <p>Preencha os metadados para publicar seu REA no repositório e na Internet</p>
+      <button class="modal-close" onclick="closeModal()" aria-label="Fechar">✕</button>
+    </div>
+    <div style="flex:1;overflow:hidden;border-radius:0 0 20px 20px;">
+      <iframe
+        id="cadastroIframe"
+        src="cadastro-rea.html"
+        style="width:100%;height:100%;min-height:600px;border:none;display:block;"
+        title="Formulário de Cadastro de REA"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ANTIGO REMOVIDO — mantido apenas para compatibilidade -->
+<div style="display:none">
+  <div class="form-grid" id="reaForm">
+
+        <!-- ── 1. IDENTIFICAÇÃO ── -->
+        <div class="form-section-title">🏷 1. Identificação (Dublin Core)</div>
+
+        <div class="form-group full">
+          <label>Título do REA <span class="req">*</span></label>
+          <input type="text" id="f_titulo" placeholder="Ex.: Introdução às Redes de Computadores para EPT">
+        </div>
+
+        <div class="form-group">
+          <label>Autor/a Principal <span class="req">*</span></label>
+          <input type="text" id="f_autor" placeholder="Nome completo">
+        </div>
+
+        <div class="form-group">
+          <label>Coautor/a(s) <span class="tip">(opcional)</span></label>
+          <input type="text" id="f_coautor" placeholder="Outros nomes separados por vírgula">
+        </div>
+
+        <div class="form-group">
+          <label>E-mail institucional <span class="req">*</span></label>
+          <input type="email" id="f_email" placeholder="estudante@ifpi.edu.br">
+        </div>
+
+        <div class="form-group">
+          <label>Instituição <span class="req">*</span></label>
+          <input type="text" id="f_inst" value="Instituto Federal do Piauí — IFPI">
+        </div>
+
+        <div class="form-group full">
+          <label>Resumo / Descrição Pedagógica <span class="req">*</span></label>
+          <textarea id="f_desc" placeholder="Descreva o objetivo educacional, conteúdo abordado e como o recurso pode ser utilizado em sala de aula..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Palavras-chave <span class="req">*</span> <span class="tip">separadas por vírgula</span></label>
+          <input type="text" id="f_keywords" placeholder="Ex.: redes, protocolos, TCP/IP, EPT">
+        </div>
+
+        <div class="form-group">
+          <label>Idioma <span class="req">*</span></label>
+          <select id="f_idioma">
+            <option value="pt-BR">Português (Brasil)</option>
+            <option value="en">Inglês</option>
+            <option value="es">Espanhol</option>
+            <option value="fr">Francês</option>
+          </select>
+        </div>
+
+        <!-- ── 2. CLASSIFICAÇÃO ── -->
+        <div class="form-section-title">📂 2. Classificação Pedagógica (LOM)</div>
+
+        <div class="form-group">
+          <label>Tipo / Formato do REA <span class="req">*</span></label>
+          <select id="f_tipo">
+            <option value="">Selecione...</option>
+            <option>Vídeo</option>
+            <option>Podcast/Áudio</option>
+            <option>PDF/E-book</option>
+            <option>Apresentação</option>
+            <option>Infográfico</option>
+            <option>Site/WebApp</option>
+            <option>Jogo Educacional</option>
+            <option>Mapa Mental</option>
+            <option>Animação/Simulação</option>
+            <option>Objeto de Aprendizagem SCORM</option>
+            <option>Outros</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Eixo Tecnológico / Área <span class="req">*</span></label>
+          <select id="f_area">
+            <option value="">Selecione...</option>
+            <option>Tecnologia da Informação</option>
+            <option>Saúde</option>
+            <option>Agropecuária</option>
+            <option>Construção Civil</option>
+            <option>Gestão e Negócios</option>
+            <option>Ambiente e Saúde</option>
+            <option>Produção Industrial</option>
+            <option>Turismo e Hospitalidade</option>
+            <option>Segurança</option>
+            <option>Recursos Naturais</option>
+            <option>Educação</option>
+            <option>Outras</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Nível / Modalidade de Ensino <span class="req">*</span></label>
+          <select id="f_nivel">
+            <option value="">Selecione...</option>
+            <option>Técnico Integrado</option>
+            <option>Técnico Subsequente</option>
+            <option>Técnico Concomitante</option>
+            <option>Graduação Tecnológica</option>
+            <option>Especialização</option>
+            <option>EaD</option>
+            <option>Formação Continuada</option>
+            <option>Livre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Tempo estimado de uso</label>
+          <select id="f_tempo">
+            <option value="">Não informado</option>
+            <option>Até 15 minutos</option>
+            <option>15 a 30 minutos</option>
+            <option>30 a 60 minutos</option>
+            <option>1 a 2 horas</option>
+            <option>Mais de 2 horas</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Público-alvo</label>
+          <input type="text" id="f_publico" placeholder="Ex.: Estudantes técnicos em Informática">
+        </div>
+
+        <div class="form-group">
+          <label>Data de produção <span class="req">*</span></label>
+          <input type="date" id="f_data">
+        </div>
+
+        <!-- ── 3. ARQUIVO / URL ── -->
+        <div class="form-section-title">📤 3. Arquivo ou Link do Recurso</div>
+
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="f_arquivo" accept=".pdf,.mp4,.mp3,.pptx,.ppt,.png,.jpg,.jpeg,.gif,.html,.htm,.zip,.epub" onchange="handleFile(this)">
+          <div class="upload-icon">📁</div>
+          <p><strong>Clique para enviar</strong> ou arraste o arquivo aqui</p>
+          <div class="upload-formats">PDF · MP4 · MP3 · PPTX · PNG · HTML · EPUB · ZIP (máx. 50 MB)</div>
+        </div>
+        <div class="upload-preview" id="uploadPreview">
+          <span>📎</span>
+          <span id="uploadFileName">arquivo.pdf</span>
+          <button onclick="clearFile()" style="margin-left:auto;background:none;border:none;cursor:pointer;color:#E53935;font-size:1rem;">✕</button>
+        </div>
+        <div class="progress-bar-wrap" id="progressWrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="or-divider">— ou informe a URL do recurso —</div>
+
+        <div class="form-group full">
+          <label>URL de acesso ao REA <span class="tip">(YouTube, Google Drive, GitHub, Canva, etc.)</span></label>
+          <input type="url" id="f_url" placeholder="https://...">
+        </div>
+
+        <div class="form-group full">
+          <label>URL de thumbnail / imagem de capa <span class="tip">(opcional)</span></label>
+          <input type="url" id="f_thumb" placeholder="https://... (link da imagem)">
+        </div>
+
+        <!-- ── 4. LICENÇA CC ── -->
+        <div class="form-section-title">⚖️ 4. Licença Creative Commons <span class="req">*</span></div>
+
+        <div class="license-grid">
+          <div class="license-pill">
+            <input type="radio" name="licenca" id="lic1" value="CC BY">
+            <label for="lic1">🔓 CC BY</label>
+          </div>
+          <div class="license-pill">
+            <input type="radio" name="licenca" id="lic2" value="CC BY-SA">
+            <label for="lic2">🔁 CC BY-SA</label>
+          </div>
+          <div class="license-pill">
+            <input type="radio" name="licenca" id="lic3" value="CC BY-ND">
+            <label for="lic3">🔒 CC BY-ND</label>
+          </div>
+          <div class="license-pill">
+            <input type="radio" name="licenca" id="lic4" value="CC BY-NC">
+            <label for="lic4">💼 CC BY-NC</label>
+          </div>
+          <div class="license-pill">
+            <input type="radio" name="licenca" id="lic5" value="CC BY-NC-SA">
+            <label for="lic5">💼🔁 CC BY-NC-SA</label>
+          </div>
+          <div class="license-pill">
+            <input type="radio" name="licenca" id="lic6" value="CC BY-NC-ND">
+            <label for="lic6">💼🔒 CC BY-NC-ND</label>
+          </div>
+          <div class="license-pill">
+            <input type="radio" name="licenca" id="lic7" value="Domínio Público (CC0)">
+            <label for="lic7">🌐 CC0 (Domínio Público)</label>
+          </div>
+        </div>
+
+        <!-- ── SUBMIT ── -->
+        <div class="form-submit-row">
+          <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+          <button class="btn-submit" onclick="submitREA()">
+            <span>🚀</span> Publicar REA
+          </button>
+        </div>
+
+      </div><!-- /form-grid oculto -->
+    </div><!-- /div oculta -->
+
+<!-- ── MODAL DETALHES ─────────────────────────────── -->
+<div class="modal-backdrop" id="detailBackdrop" onclick="closeDetailIfOutside(event)">
+  <div class="modal" id="detailModal" role="dialog">
+    <div class="detail-hero" id="detailHero">
+      <button class="modal-close" onclick="closeDetail()" style="position:absolute;top:1.2rem;right:1.5rem">✕</button>
+      <div id="detailTags" class="card-tags" style="margin-bottom:.8rem"></div>
+      <h2 id="detailTitle"></h2>
+      <div class="detail-meta-row" id="detailMetaRow"></div>
+    </div>
+    <div class="detail-body" id="detailBody"></div>
+  </div>
+</div>
+
+<!-- ── TOAST ─────────────────────────────────────── -->
+<div class="toast" id="toast">✅ REA publicado com sucesso!</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer>
+  <strong>REA·EPT — Repositório de Recursos Educacionais Abertos</strong><br>
+  Disciplina Produção de Materiais Didáticos Digitais · Especialização EaD para EPT<br>
+  Orientação: <strong>Profa. Dra. Adriana Rocha Silva</strong> · Instituto Federal do Piauí — IFPI<br>
+  <span style="font-size:.75rem;opacity:.6">Todos os recursos publicados com licenças Creative Commons abertas · Padrão Dublin Core + LOM</span>
+</footer>
+
+<script>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+let recursos = JSON.parse(localStorage.getItem('rea_ept_recursos') || '[]');
+
+// Exemplo pré-carregado
+if (recursos.length === 0) {
+  recursos = [
+    {
+      id: 1, titulo: 'Introdução à Programação em Python para EPT',
+      autor: 'Maria Clara Souza', coautor: '', email: 'mariaclara@ifpi.edu.br',
+      inst: 'IFPI — Campus Teresina Central',
+      desc: 'Videoaula introdutória sobre lógica de programação e Python, voltada para estudantes do Técnico em Informática. Aborda variáveis, estruturas condicionais e laços de repetição com exemplos práticos do cotidiano profissional.',
+      keywords: 'python, programação, lógica, EPT, informática',
+      tipo: 'Vídeo', area: 'Tecnologia da Informação', nivel: 'Técnico Integrado',
+      tempo: '30 a 60 minutos', publico: 'Estudantes do Técnico em Informática',
+      data: '2025-05-10', licenca: 'CC BY-SA', url: 'https://youtube.com',
+      thumb: '', idioma: 'pt-BR', arquivo: ''
+    },
+    {
+      id: 2, titulo: 'Agroecologia e Sustentabilidade no Semiárido Piauiense',
+      autor: 'João Batista Neto', coautor: 'Ana Lúcia Ferreira', email: 'joaobatista@ifpi.edu.br',
+      inst: 'IFPI — Campus Corrente',
+      desc: 'E-book ilustrado sobre práticas agroecológicas adaptadas ao semiárido do Piauí. Traz técnicas de captação de água de chuva, agricultura familiar e manejo sustentável do solo, com fotos e infográficos da região.',
+      keywords: 'agroecologia, semiárido, sustentabilidade, Piauí, agricultura familiar',
+      tipo: 'PDF/E-book', area: 'Agropecuária', nivel: 'Técnico Subsequente',
+      tempo: 'Mais de 2 horas', publico: 'Agricultores familiares e estudantes técnicos em Agropecuária',
+      data: '2025-06-01', licenca: 'CC BY-NC-SA', url: 'https://drive.google.com',
+      thumb: '', idioma: 'pt-BR', arquivo: ''
+    },
+    {
+      id: 3, titulo: 'Quiz Interativo: Segurança do Trabalho em Ambientes Industriais',
+      autor: 'Carla Mendes Oliveira', coautor: '', email: 'carla.mendes@ifpi.edu.br',
+      inst: 'IFPI — Campus Parnaíba',
+      desc: 'Jogo educacional do tipo quiz com 50 questões sobre normas NR (Normas Regulamentadoras) e boas práticas de segurança em ambientes industriais. Desenvolvido em HTML5, funciona sem internet.',
+      keywords: 'segurança, NR, indústria, EPI, EPT, jogo, quiz',
+      tipo: 'Jogo Educacional', area: 'Produção Industrial', nivel: 'Técnico Integrado',
+      tempo: '30 a 60 minutos', publico: 'Estudantes e trabalhadores da área industrial',
+      data: '2025-06-15', licenca: 'CC BY', url: 'https://github.com',
+      thumb: '', idioma: 'pt-BR', arquivo: ''
+    }
+  ];
+  saveData();
+}
+
+function saveData() {
+  localStorage.setItem('rea_ept_recursos', JSON.stringify(recursos));
+  updateStats();
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = recursos.length;
+  const authors = new Set(recursos.map(r => r.autor));
+  document.getElementById('statAuthors').textContent = authors.size;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NAV
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'repositorio') renderCards(recursos);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RENDER CARDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const tipoMap = {
+  'Vídeo':                 { cls: 'video',  icon: '🎬' },
+  'Podcast/Áudio':         { cls: 'audio',  icon: '🎙' },
+  'PDF/E-book':            { cls: 'pdf',    icon: '📄' },
+  'Apresentação':          { cls: 'slides', icon: '📊' },
+  'Infográfico':           { cls: 'infog',  icon: '🖼' },
+  'Site/WebApp':           { cls: 'site',   icon: '🌐' },
+  'Jogo Educacional':      { cls: 'game',   icon: '🎮' },
+  'Mapa Mental':           { cls: 'infog',  icon: '🧠' },
+  'Animação/Simulação':    { cls: 'video',  icon: '✨' },
+  'Objeto de Aprendizagem SCORM': { cls: 'site', icon: '📦' },
+  'Outros':                { cls: 'outros', icon: '📁' },
+};
+
+function getTipoInfo(tipo) {
+  return tipoMap[tipo] || { cls: 'outros', icon: '📁' };
+}
+
+function renderCards(lista) {
+  const grid = document.getElementById('cardsGrid');
+  const empty = document.getElementById('emptyState');
+  const count = document.getElementById('countLabel');
+
+  count.textContent = `— ${lista.length} resultado${lista.length !== 1 ? 's' : ''}`;
+
+  if (lista.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = lista.map((r, i) => {
+    const ti = getTipoInfo(r.tipo);
+    const dateStr = r.data ? new Date(r.data + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
+    const urlLink = r.url ? `<a href="${r.url}" target="_blank" rel="noopener" class="btn-sm ver">🔗 Acessar</a>` :
+                            `<span class="btn-sm ver" style="opacity:.4;cursor:default">Sem link</span>`;
+    return `
+    <div class="rea-card" data-id="${r.id}">
+      <div class="card-banner ${ti.cls}"></div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-tipo">${ti.icon} ${r.tipo}</span>
+          ${r.area ? `<span class="tag tag-area">${r.area}</span>` : ''}
+          ${r.nivel ? `<span class="tag tag-nivel">${r.nivel}</span>` : ''}
+        </div>
+        <div class="card-title">${escHtml(r.titulo)}</div>
+        <div class="card-author">por ${escHtml(r.autor)}${r.coautor ? ' &amp; ' + escHtml(r.coautor) : ''}</div>
+        <div class="card-desc">${escHtml(r.desc)}</div>
+        <div class="card-meta">
+          <span>📅 ${dateStr}</span>
+          <span>⚖️ ${r.licenca || '—'}</span>
+          ${r.idioma ? `<span>🌐 ${r.idioma}</span>` : ''}
+        </div>
+        <div class="card-actions">
+          ${urlLink}
+          <button class="btn-sm baixar" onclick="openDetail(${r.id})">📋 Metadados</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FILTROS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function filterCards() {
+  const q    = document.getElementById('searchInput').value.toLowerCase();
+  const tipo = document.getElementById('filterTipo').value;
+  const area = document.getElementById('filterArea').value;
+
+  const filtered = recursos.filter(r => {
+    const matchQ = !q || [r.titulo, r.autor, r.keywords, r.desc].some(f => f && f.toLowerCase().includes(q));
+    const matchT = !tipo || r.tipo === tipo;
+    const matchA = !area || r.area === area;
+    return matchQ && matchT && matchA;
+  });
+  renderCards(filtered);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MODAL CADASTRO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function openCadastro() {
+  document.getElementById('modalBackdrop').classList.add('open');
+  // Recarrega o iframe para garantir estado limpo
+  const iframe = document.getElementById('cadastroIframe');
+  if (iframe.dataset.loaded) {
+    iframe.src = iframe.src;
+  }
+  iframe.dataset.loaded = 'true';
+  document.body.style.overflow = 'hidden';
+}
+
+function openModal() { openCadastro(); } // compatibilidade
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalIfOutside(e) {
+  if (e.target === document.getElementById('modalBackdrop')) closeModal();
+}
+
+/* Upload */
+function handleFile(input) {
+  if (!input.files.length) return;
+  const file = input.files[0];
+  const preview = document.getElementById('uploadPreview');
+  document.getElementById('uploadFileName').textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+  preview.classList.add('show');
+  // Simula progress
+  const pw = document.getElementById('progressWrap');
+  const pb = document.getElementById('progressBar');
+  pw.classList.add('show');
+  pb.style.width = '0%';
+  let p = 0;
+  const iv = setInterval(() => {
+    p += Math.random() * 18;
+    if (p >= 100) { p = 100; clearInterval(iv); setTimeout(() => pw.classList.remove('show'), 600); }
+    pb.style.width = p + '%';
+  }, 120);
+}
+function clearFile() {
+  document.getElementById('f_arquivo').value = '';
+  document.getElementById('uploadPreview').classList.remove('show');
+}
+
+/* Validação e submit */
+function submitREA() {
+  const titulo   = document.getElementById('f_titulo').value.trim();
+  const autor    = document.getElementById('f_autor').value.trim();
+  const email    = document.getElementById('f_email').value.trim();
+  const desc     = document.getElementById('f_desc').value.trim();
+  const tipo     = document.getElementById('f_tipo').value;
+  const area     = document.getElementById('f_area').value;
+  const nivel    = document.getElementById('f_nivel').value;
+  const data     = document.getElementById('f_data').value;
+  const licenca  = document.querySelector('input[name="licenca"]:checked');
+  const url      = document.getElementById('f_url').value.trim();
+  const arquivo  = document.getElementById('f_arquivo').files[0];
+  const keywords = document.getElementById('f_keywords').value.trim();
+
+  if (!titulo)   { alert('⚠️ Informe o título do REA.'); return; }
+  if (!autor)    { alert('⚠️ Informe o nome do/a autor/a.'); return; }
+  if (!email)    { alert('⚠️ Informe o e-mail institucional.'); return; }
+  if (!desc)     { alert('⚠️ Adicione uma descrição pedagógica.'); return; }
+  if (!tipo)     { alert('⚠️ Selecione o tipo/formato do REA.'); return; }
+  if (!area)     { alert('⚠️ Selecione o eixo tecnológico/área.'); return; }
+  if (!nivel)    { alert('⚠️ Selecione o nível de ensino.'); return; }
+  if (!data)     { alert('⚠️ Informe a data de produção.'); return; }
+  if (!licenca)  { alert('⚠️ Escolha uma licença Creative Commons.'); return; }
+  if (!url && !arquivo) { alert('⚠️ Forneça a URL do recurso ou faça o upload do arquivo.'); return; }
+
+  const novoREA = {
+    id:       Date.now(),
+    titulo, autor,
+    coautor:  document.getElementById('f_coautor').value.trim(),
+    email,
+    inst:     document.getElementById('f_inst').value.trim(),
+    desc, keywords,
+    tipo, area, nivel,
+    tempo:    document.getElementById('f_tempo').value,
+    publico:  document.getElementById('f_publico').value.trim(),
+    data,
+    licenca:  licenca.value,
+    url,
+    thumb:    document.getElementById('f_thumb').value.trim(),
+    idioma:   document.getElementById('f_idioma').value,
+    arquivo:  arquivo ? arquivo.name : ''
+  };
+
+  recursos.unshift(novoREA);
+  saveData();
+  renderCards(recursos);
+  closeModal();
+  showSection('repositorio', document.querySelectorAll('nav button')[0]);
+  showToast();
+  resetForm();
+}
+
+function resetForm() {
+  ['f_titulo','f_autor','f_coautor','f_email','f_desc','f_keywords','f_url','f_thumb','f_publico']
+    .forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f_inst').value = 'Instituto Federal do Piauí — IFPI';
+  ['f_tipo','f_area','f_nivel','f_tempo','f_idioma'].forEach(id => document.getElementById(id).selectedIndex = 0);
+  document.querySelectorAll('input[name="licenca"]').forEach(r => r.checked = false);
+  clearFile();
+}
+
+/* Toast */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  if (msg) t.innerHTML = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MODAL DETALHES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function openDetail(id) {
+  const r = recursos.find(x => x.id === id);
+  if (!r) return;
+
+  const ti = getTipoInfo(r.tipo);
+  const dateStr = r.data ? new Date(r.data + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
+
+  document.getElementById('detailTags').innerHTML = `
+    <span class="tag tag-tipo">${ti.icon} ${r.tipo}</span>
+    ${r.area ? `<span class="tag tag-area">${r.area}</span>` : ''}
+    ${r.nivel ? `<span class="tag tag-nivel">${r.nivel}</span>` : ''}
+  `;
+  document.getElementById('detailTitle').textContent = r.titulo;
+  document.getElementById('detailMetaRow').innerHTML = `
+    <span class="meta-badge">⚖️ ${r.licenca || '—'}</span>
+    <span class="meta-badge">📅 ${dateStr}</span>
+    <span class="meta-badge">🌐 ${r.idioma || 'pt-BR'}</span>
+    ${r.tempo ? `<span class="meta-badge">⏱ ${r.tempo}</span>` : ''}
+  `;
+
+  const urlSection = r.url
+    ? `<a href="${escHtml(r.url)}" target="_blank" rel="noopener">${escHtml(r.url)}</a>`
+    : (r.arquivo ? `📎 Arquivo: ${escHtml(r.arquivo)}` : '<em>Não informado</em>');
+
+  document.getElementById('detailBody').innerHTML = `
+    <div class="detail-section">
+      <h4>📋 Metadados Dublin Core + LOM</h4>
+      <div class="detail-grid">
+        <div class="detail-field"><div class="df-label">dc:title</div><div class="df-value">${escHtml(r.titulo)}</div></div>
+        <div class="detail-field"><div class="df-label">dc:creator</div><div class="df-value">${escHtml(r.autor)}${r.coautor ? '; ' + escHtml(r.coautor) : ''}</div></div>
+        <div class="detail-field"><div class="df-label">dc:type</div><div class="df-value">${escHtml(r.tipo)}</div></div>
+        <div class="detail-field"><div class="df-label">dc:subject</div><div class="df-value">${escHtml(r.area)}</div></div>
+        <div class="detail-field"><div class="df-label">dc:language</div><div class="df-value">${r.idioma || 'pt-BR'}</div></div>
+        <div class="detail-field"><div class="df-label">dc:date</div><div class="df-value">${dateStr}</div></div>
+        <div class="detail-field"><div class="df-label">dc:rights</div><div class="df-value">${escHtml(r.licenca)}</div></div>
+        <div class="detail-field"><div class="df-label">dc:publisher</div><div class="df-value">${escHtml(r.inst)}</div></div>
+        <div class="detail-field"><div class="df-label">lom:educationalLevel</div><div class="df-value">${escHtml(r.nivel)}</div></div>
+        <div class="detail-field"><div class="df-label">lom:typicalLearningTime</div><div class="df-value">${escHtml(r.tempo) || '—'}</div></div>
+        ${r.publico ? `<div class="detail-field" style="grid-column:1/-1"><div class="df-label">lom:intendedEndUserRole</div><div class="df-value">${escHtml(r.publico)}</div></div>` : ''}
+      </div>
+    </div>
+    ${r.keywords ? `<div class="detail-section"><h4>🏷 lom:keyword</h4><p>${escHtml(r.keywords)}</p></div>` : ''}
+    <div class="detail-section"><h4>📝 dc:description</h4><p>${escHtml(r.desc)}</p></div>
+    <div class="detail-section"><h4>🔗 dc:identifier — Acesso ao recurso</h4><p>${urlSection}</p></div>
+    <div style="text-align:right;margin-top:1.5rem">
+      ${r.url ? `<a href="${escHtml(r.url)}" target="_blank" rel="noopener" class="btn-submit" style="display:inline-flex;text-decoration:none">🔗 Acessar recurso</a>` : ''}
+    </div>
+  `;
+
+  document.getElementById('detailBackdrop').classList.add('open');
+}
+function closeDetail() { document.getElementById('detailBackdrop').classList.remove('open'); }
+function closeDetailIfOutside(e) {
+  if (e.target === document.getElementById('detailBackdrop')) closeDetail();
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DRAG & DROP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const uz = document.getElementById('uploadZone');
+uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('dragging'); });
+uz.addEventListener('dragleave', () => uz.classList.remove('dragging'));
+uz.addEventListener('drop', e => {
+  e.preventDefault();
+  uz.classList.remove('dragging');
+  const dt = e.dataTransfer;
+  if (dt.files.length) {
+    document.getElementById('f_arquivo').files = dt.files;
+    handleFile(document.getElementById('f_arquivo'));
+  }
+});
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+updateStats();
+renderCards(recursos);
+</script>
+</body>
+</html>
