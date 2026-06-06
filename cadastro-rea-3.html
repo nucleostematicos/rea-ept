@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastrar REA — Repositório REA·EPT · IFPI</title>
+<meta name="description" content="Formulário de cadastro de Recursos Educacionais Abertos — Disciplina MDD · Especialização EaD para EPT · IFPI">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #00875A; --verde-vivo: #00C48C; --verde-escuro: #005C3D;
+    --azul: #003366; --azul-med: #0055A4;
+    --cinza-f: #F4F6F2; --cinza-m: #C8D2CC; --cinza-e: #3A3F36;
+    --branco: #FFFFFF; --erro: #E53935; --ok: #2E7D32;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cinza-f); color: var(--cinza-e); min-height: 100vh; }
+
+  /* HEADER */
+  header {
+    background: var(--azul);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 64px; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,.25);
+  }
+  .header-brand { display: flex; align-items: center; gap: .8rem; text-decoration: none; }
+  .header-logo {
+    width: 38px; height: 38px; background: var(--verde-vivo); border-radius: 9px;
+    display: grid; place-items: center; font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: .9rem; color: var(--azul);
+  }
+  .header-text h1 { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700; color: white; line-height: 1.2; }
+  .header-text span { font-size: .7rem; color: rgba(255,255,255,.6); font-weight: 300; }
+  .header-link {
+    color: rgba(255,255,255,.75); font-size: .82rem; text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,.2); padding: .35rem .9rem;
+    border-radius: 8px; transition: all .2s;
+  }
+  .header-link:hover { background: rgba(255,255,255,.1); color: white; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--azul) 0%, var(--verde-escuro) 100%);
+    padding: 3rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 30%, rgba(0,196,140,.15) 0%, transparent 50%);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: rgba(0,196,140,.18); border: 1px solid var(--verde-vivo);
+    color: var(--verde-vivo); font-size: .75rem; font-weight: 600;
+    padding: .3rem .9rem; border-radius: 100px; margin-bottom: 1rem;
+    text-transform: uppercase; letter-spacing: .5px; position: relative;
+  }
+  .hero h2 {
+    font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    font-weight: 800; color: white; line-height: 1.2; margin-bottom: .7rem; position: relative;
+  }
+  .hero h2 em { font-style: normal; color: var(--verde-vivo); }
+  .hero p { color: rgba(255,255,255,.72); font-size: .9rem; font-weight: 300; line-height: 1.7; position: relative; }
+
+  /* PROGRESS STEPS */
+  .progress-steps {
+    background: white; border-bottom: 2px solid var(--cinza-f);
+    padding: 1.2rem 2rem; display: flex; justify-content: center;
+    gap: 0; overflow-x: auto;
+  }
+  .ps-item {
+    display: flex; align-items: center; gap: .5rem; flex-shrink: 0;
+    padding: .4rem 1.2rem; cursor: pointer; transition: all .2s;
+    border-radius: 8px; position: relative;
+  }
+  .ps-item:hover { background: var(--cinza-f); }
+  .ps-item.active .ps-num { background: var(--azul); color: white; }
+  .ps-item.done .ps-num { background: var(--verde); color: white; }
+  .ps-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--cinza-m); color: #666;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .82rem;
+    display: grid; place-items: center; flex-shrink: 0; transition: all .2s;
+  }
+  .ps-label { font-size: .8rem; font-weight: 600; color: #888; white-space: nowrap; }
+  .ps-item.active .ps-label { color: var(--azul); }
+  .ps-item.done .ps-label { color: var(--verde); }
+  .ps-arrow { color: var(--cinza-m); font-size: .9rem; margin: 0 .2rem; }
+
+  /* MAIN */
+  main { max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* FORM PAGES */
+  .form-page { display: none; }
+  .form-page.active { display: block; animation: fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* CARD */
+  .form-card {
+    background: white; border-radius: 18px; padding: 2rem;
+    box-shadow: 0 4px 24px rgba(0,87,60,.09); margin-bottom: 1.2rem;
+    border: 1.5px solid transparent; transition: border-color .2s;
+  }
+  .form-card:focus-within { border-color: rgba(0,196,140,.3); }
+
+  .card-title {
+    font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+    color: var(--azul); margin-bottom: 1.4rem;
+    display: flex; align-items: center; gap: .6rem;
+    padding-bottom: .7rem; border-bottom: 2px solid var(--cinza-f);
+  }
+  .card-title .ct-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: var(--cinza-f); display: grid; place-items: center; font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* FORM GRID */
+  .fg { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .fg .full { grid-column: 1 / -1; }
+
+  /* FIELD */
+  .fld { display: flex; flex-direction: column; gap: .38rem; }
+  .fld label {
+    font-size: .82rem; font-weight: 600; color: var(--cinza-e); letter-spacing: .2px;
+    display: flex; align-items: center; gap: .3rem; flex-wrap: wrap;
+  }
+  .fld label .req { color: var(--erro); }
+  .fld label .tip { font-weight: 300; color: #aaa; font-size: .75rem; }
+
+  .fld input, .fld select, .fld textarea {
+    padding: .68rem 1rem; border: 1.5px solid #DDD; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: .9rem;
+    background: var(--cinza-f); outline: none; transition: all .2s; color: var(--cinza-e);
+    width: 100%;
+  }
+  .fld input:focus, .fld select:focus, .fld textarea:focus {
+    border-color: var(--verde); background: white;
+    box-shadow: 0 0 0 3px rgba(0,196,140,.12);
+  }
+  .fld input.error, .fld select.error, .fld textarea.error {
+    border-color: var(--erro); background: #FFF5F5;
+  }
+  .fld textarea { resize: vertical; min-height: 100px; }
+  .fld .err-msg { font-size: .75rem; color: var(--erro); display: none; }
+  .fld .err-msg.show { display: block; }
+  .fld .char-count { font-size: .72rem; color: #bbb; text-align: right; }
+
+  /* RADIO / CHECK PILLS */
+  .pill-group { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .2rem; }
+  .pill input { display: none; }
+  .pill label {
+    display: flex; align-items: center; gap: .35rem;
+    padding: .4rem 1rem; border: 1.5px solid var(--cinza-m);
+    border-radius: 100px; font-size: .82rem; font-weight: 500;
+    cursor: pointer; transition: all .2s; color: #666; background: white;
+    user-select: none;
+  }
+  .pill label:hover { border-color: var(--verde-vivo); color: var(--verde-escuro); }
+  .pill input:checked + label {
+    border-color: var(--verde); background: #E8F5E9; color: var(--verde-escuro); font-weight: 600;
+  }
+
+  /* UPLOAD ZONE */
+  .upload-zone {
+    border: 2px dashed var(--cinza-m); border-radius: 14px;
+    padding: 2rem 1rem; text-align: center; cursor: pointer;
+    transition: all .2s; background: var(--cinza-f); position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--verde); background: #E8F5E9; }
+  .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .upload-zone .uz-icon { font-size: 2.2rem; margin-bottom: .5rem; }
+  .upload-zone p { font-size: .88rem; color: #666; }
+  .upload-zone strong { color: var(--verde); }
+  .upload-zone .uz-formats { font-size: .75rem; color: #aaa; margin-top: .3rem; }
+  .upload-preview {
+    display: none; align-items: center; gap: .7rem;
+    background: #E8F5E9; border: 1.5px solid var(--verde-vivo);
+    border-radius: 10px; padding: .7rem 1rem; margin-top: .7rem;
+    font-size: .85rem; color: var(--verde-escuro); font-weight: 500;
+  }
+  .upload-preview.show { display: flex; }
+  .upload-preview button {
+    margin-left: auto; background: none; border: none; cursor: pointer;
+    color: var(--erro); font-size: 1rem; padding: 0;
+  }
+
+  /* OR DIVIDER */
+  .or-div {
+    display: flex; align-items: center; gap: .8rem;
+    color: #bbb; font-size: .8rem; margin: 1rem 0;
+  }
+  .or-div::before, .or-div::after { content: ''; flex: 1; height: 1px; background: var(--cinza-m); }
+
+  /* DECLARAÇÃO */
+  .declaracao {
+    background: #F3E5F5; border: 1.5px solid #CE93D8;
+    border-radius: 12px; padding: 1.2rem; display: flex; gap: .8rem; align-items: flex-start;
+  }
+  .declaracao input[type=checkbox] { width: 18px; height: 18px; cursor: pointer; margin-top: .1rem; flex-shrink: 0; accent-color: var(--azul); }
+  .declaracao label { font-size: .86rem; color: #4A148C; line-height: 1.6; cursor: pointer; font-weight: 500; }
+
+  /* NAV BUTTONS */
+  .form-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 1.5rem; gap: 1rem;
+  }
+  .btn-back {
+    padding: .7rem 1.5rem; background: white; border: 1.5px solid var(--cinza-m);
+    border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .9rem;
+    cursor: pointer; transition: all .2s; color: #666;
+    display: flex; align-items: center; gap: .4rem;
+  }
+  .btn-back:hover { border-color: var(--azul); color: var(--azul); }
+  .btn-next {
+    padding: .7rem 2rem; background: var(--azul); color: white;
+    border: none; border-radius: 10px; font-family: 'Syne', sans-serif;
+    font-size: .95rem; font-weight: 700; cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; gap: .5rem; margin-left: auto;
+  }
+  .btn-next:hover { background: var(--azul-med); transform: translateY(-1px); }
+  .btn-submit {
+    padding: .75rem 2.2rem; background: var(--verde); color: white;
+    border: none; border-radius: 10px; font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700; cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; gap: .5rem; box-shadow: 0 4px 20px rgba(0,135,90,.3);
+  }
+  .btn-submit:hover { background: var(--verde-vivo); color: var(--azul); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,196,140,.35); }
+  .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  /* PROGRESS BAR */
+  .form-progress { background: var(--cinza-m); height: 4px; border-radius: 2px; margin-bottom: 1.5rem; overflow: hidden; }
+  .form-progress-bar { height: 100%; background: linear-gradient(90deg, var(--verde), var(--verde-vivo)); border-radius: 2px; transition: width .4s ease; }
+
+  /* RESUMO */
+  .resumo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .resumo-item { background: var(--cinza-f); border-radius: 10px; padding: .8rem 1rem; }
+  .resumo-item .ri-label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #999; margin-bottom: .2rem; }
+  .resumo-item .ri-val { font-size: .88rem; color: var(--cinza-e); font-weight: 500; word-break: break-word; }
+  .resumo-item.full { grid-column: 1/-1; }
+
+  /* SUCCESS */
+  .success-screen {
+    display: none; text-align: center; padding: 3rem 2rem;
+    background: white; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,87,60,.09);
+  }
+  .success-screen.show { display: block; animation: fadeIn .4s ease; }
+  .success-icon { font-size: 4rem; margin-bottom: 1.2rem; }
+  .success-screen h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--verde); margin-bottom: .8rem; }
+  .success-screen p { font-size: .95rem; color: #666; line-height: 1.8; max-width: 480px; margin: 0 auto 1.5rem; }
+  .success-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+  .btn-novo {
+    padding: .7rem 1.5rem; background: var(--azul); color: white; border: none;
+    border-radius: 10px; font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: .9rem; cursor: pointer; transition: all .2s;
+  }
+  .btn-novo:hover { background: var(--azul-med); }
+  .btn-repo {
+    padding: .7rem 1.5rem; background: var(--cinza-f); color: var(--azul);
+    border: 1.5px solid var(--cinza-m); border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: .9rem; cursor: pointer;
+    text-decoration: none; display: inline-block; transition: all .2s;
+  }
+  .btn-repo:hover { border-color: var(--azul); }
+
+  /* INFO BOX */
+  .info-box {
+    background: #E3F2FD; border: 1.5px solid #90CAF9; border-radius: 10px;
+    padding: .9rem 1.1rem; font-size: .83rem; color: #1565C0; line-height: 1.7;
+    display: flex; gap: .6rem; align-items: flex-start; margin-top: .5rem;
+  }
+
+  /* LOADING SPINNER */
+  .spinner {
+    display: inline-block; width: 18px; height: 18px;
+    border: 2.5px solid rgba(255,255,255,.3); border-top-color: white;
+    border-radius: 50%; animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* FOOTER */
+  footer {
+    background: var(--azul); color: rgba(255,255,255,.65);
+    text-align: center; padding: 1.8rem 1rem; margin-top: 2rem;
+    font-size: .8rem; line-height: 1.9;
+  }
+  footer strong { color: var(--verde-vivo); }
+
+  @media (max-width: 600px) {
+    .fg { grid-template-columns: 1fr; }
+    .resumo-grid { grid-template-columns: 1fr; }
+    .progress-steps { gap: 0; padding: .8rem 1rem; }
+    .ps-label { display: none; }
+    main { padding: 1.2rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="header-brand" href="https://nucleostematicos.github.io/rea-ept" target="_blank">
+    <div class="header-logo">REA</div>
+    <div class="header-text">
+      <h1>Repositório REA·EPT</h1>
+      <span>Instituto Federal do Piauí — IFPI</span>
+    </div>
+  </a>
+  <a class="header-link" href="https://nucleostematicos.github.io/rea-ept" target="_blank">← Ver repositório</a>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📋 Cadastro de REA · Disciplina MDD</div>
+  <h2>Publique seu <em>Recurso Educacional Aberto</em></h2>
+  <p>Preencha os metadados do seu REA para publicação no repositório da turma · Especialização EaD para EPT · IFPI</p>
+</div>
+
+<!-- STEPS -->
+<div class="progress-steps">
+  <div class="ps-item active" id="ps1"><div class="ps-num">1</div><span class="ps-label">Identificação</span></div>
+  <div class="ps-arrow">›</div>
+  <div class="ps-item" id="ps2"><div class="ps-num">2</div><span class="ps-label">Classificação</span></div>
+  <div class="ps-arrow">›</div>
+  <div class="ps-item" id="ps3"><div class="ps-num">3</div><span class="ps-label">Descrição</span></div>
+  <div class="ps-arrow">›</div>
+  <div class="ps-item" id="ps4"><div class="ps-num">4</div><span class="ps-label">Recurso</span></div>
+  <div class="ps-arrow">›</div>
+  <div class="ps-item" id="ps5"><div class="ps-num">5</div><span class="ps-label">Licença</span></div>
+  <div class="ps-arrow">›</div>
+  <div class="ps-item" id="ps6"><div class="ps-num">✓</div><span class="ps-label">Revisão</span></div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="form-progress"><div class="form-progress-bar" id="progressBar" style="width:16%"></div></div>
+
+  <!-- ══ PÁGINA 1 — IDENTIFICAÇÃO ══ -->
+  <div class="form-page active" id="page1">
+    <div class="form-card">
+      <div class="card-title"><div class="ct-icon">🏷</div> Identificação do REA — Dublin Core</div>
+      <div class="fg">
+        <div class="fld full">
+          <label>Título do REA <span class="req">*</span></label>
+          <input type="text" id="f_titulo" placeholder="Ex.: Introdução às Redes de Computadores para o Ensino Técnico" maxlength="200" oninput="countChars(this,'cc_titulo',200)">
+          <span class="char-count" id="cc_titulo">0/200</span>
+          <span class="err-msg" id="e_titulo">Por favor, informe o título do REA.</span>
+        </div>
+        <div class="fld">
+          <label>Autor/a Principal <span class="req">*</span></label>
+          <input type="text" id="f_autor" placeholder="Nome completo">
+          <span class="err-msg" id="e_autor">Informe o nome do/a autor/a.</span>
+        </div>
+        <div class="fld">
+          <label>Coautor/a(s) <span class="tip">opcional</span></label>
+          <input type="text" id="f_coautor" placeholder="Separados por vírgula">
+        </div>
+        <div class="fld">
+          <label>E-mail institucional <span class="req">*</span></label>
+          <input type="email" id="f_email" placeholder="estudante@ifpi.edu.br">
+          <span class="err-msg" id="e_email">Informe um e-mail válido.</span>
+        </div>
+        <div class="fld">
+          <label>Campus / Polo <span class="req">*</span></label>
+          <select id="f_campus">
+            <option value="">Selecione...</option>
+            <option>Teresina Central</option><option>Teresina Zona Sul</option>
+            <option>Parnaíba</option><option>Floriano</option><option>Picos</option>
+            <option>São Raimundo Nonato</option><option>Corrente</option>
+            <option>Piripiri</option><option>Campo Maior</option>
+            <option>Uruçuí</option><option>Paulistana</option><option>Outro</option>
+          </select>
+          <span class="err-msg" id="e_campus">Selecione o campus ou polo.</span>
+        </div>
+        <div class="fld">
+          <label>Instituição</label>
+          <input type="text" id="f_inst" value="Instituto Federal do Piauí — IFPI" readonly style="color:#888;background:#f0f0f0;">
+        </div>
+        <div class="fld">
+          <label>Data de produção <span class="req">*</span></label>
+          <input type="date" id="f_data">
+          <span class="err-msg" id="e_data">Informe a data de produção.</span>
+        </div>
+        <div class="fld">
+          <label>Idioma do recurso <span class="req">*</span></label>
+          <select id="f_idioma">
+            <option value="pt-BR">Português (Brasil)</option>
+            <option value="en">Inglês</option>
+            <option value="es">Espanhol</option>
+            <option value="fr">Francês</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-nav">
+      <div></div>
+      <button class="btn-next" onclick="goTo(2)">Próximo — Classificação →</button>
+    </div>
+  </div>
+
+  <!-- ══ PÁGINA 2 — CLASSIFICAÇÃO ══ -->
+  <div class="form-page" id="page2">
+    <div class="form-card">
+      <div class="card-title"><div class="ct-icon">📂</div> Classificação Pedagógica — LOM</div>
+      <div class="fg">
+
+        <div class="fld full">
+          <label>Tipo / Formato do REA <span class="req">*</span></label>
+          <div class="pill-group" id="pg_tipo">
+            <div class="pill"><input type="radio" name="tipo" id="t1" value="Vídeo"><label for="t1">🎬 Vídeo</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t2" value="Podcast/Áudio"><label for="t2">🎙 Podcast/Áudio</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t3" value="PDF/E-book"><label for="t3">📄 PDF/E-book</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t4" value="Apresentação"><label for="t4">📊 Apresentação</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t5" value="Infográfico"><label for="t5">🖼 Infográfico</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t6" value="Site/WebApp"><label for="t6">🌐 Site/WebApp</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t7" value="Jogo Educacional"><label for="t7">🎮 Jogo Educacional</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t8" value="Mapa Mental"><label for="t8">🧠 Mapa Mental</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t9" value="Animação/Simulação"><label for="t9">✨ Animação</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t10" value="SCORM"><label for="t10">📦 SCORM</label></div>
+            <div class="pill"><input type="radio" name="tipo" id="t11" value="Outros"><label for="t11">📁 Outros</label></div>
+          </div>
+          <span class="err-msg" id="e_tipo">Selecione o tipo do REA.</span>
+        </div>
+
+        <div class="fld full">
+          <label>Eixo Tecnológico / Área <span class="req">*</span></label>
+          <div class="pill-group" id="pg_area">
+            <div class="pill"><input type="radio" name="area" id="a1" value="Tecnologia da Informação"><label for="a1">💻 Tecnologia da Informação</label></div>
+            <div class="pill"><input type="radio" name="area" id="a2" value="Saúde"><label for="a2">🏥 Saúde</label></div>
+            <div class="pill"><input type="radio" name="area" id="a3" value="Agropecuária"><label for="a3">🌾 Agropecuária</label></div>
+            <div class="pill"><input type="radio" name="area" id="a4" value="Construção Civil"><label for="a4">🏗 Construção Civil</label></div>
+            <div class="pill"><input type="radio" name="area" id="a5" value="Gestão e Negócios"><label for="a5">📈 Gestão e Negócios</label></div>
+            <div class="pill"><input type="radio" name="area" id="a6" value="Ambiente e Saúde"><label for="a6">🌿 Ambiente e Saúde</label></div>
+            <div class="pill"><input type="radio" name="area" id="a7" value="Produção Industrial"><label for="a7">⚙️ Produção Industrial</label></div>
+            <div class="pill"><input type="radio" name="area" id="a8" value="Turismo e Hospitalidade"><label for="a8">✈️ Turismo</label></div>
+            <div class="pill"><input type="radio" name="area" id="a9" value="Segurança"><label for="a9">🛡 Segurança</label></div>
+            <div class="pill"><input type="radio" name="area" id="a10" value="Recursos Naturais"><label for="a10">🌳 Recursos Naturais</label></div>
+            <div class="pill"><input type="radio" name="area" id="a11" value="Educação"><label for="a11">🎓 Educação</label></div>
+            <div class="pill"><input type="radio" name="area" id="a12" value="Outras"><label for="a12">📁 Outras</label></div>
+          </div>
+          <span class="err-msg" id="e_area">Selecione o eixo tecnológico.</span>
+        </div>
+
+        <div class="fld full">
+          <label>Nível / Modalidade de Ensino <span class="req">*</span></label>
+          <div class="pill-group" id="pg_nivel">
+            <div class="pill"><input type="radio" name="nivel" id="n1" value="Técnico Integrado"><label for="n1">Técnico Integrado</label></div>
+            <div class="pill"><input type="radio" name="nivel" id="n2" value="Técnico Subsequente"><label for="n2">Técnico Subsequente</label></div>
+            <div class="pill"><input type="radio" name="nivel" id="n3" value="Técnico Concomitante"><label for="n3">Técnico Concomitante</label></div>
+            <div class="pill"><input type="radio" name="nivel" id="n4" value="Graduação Tecnológica"><label for="n4">Graduação Tecnológica</label></div>
+            <div class="pill"><input type="radio" name="nivel" id="n5" value="Especialização"><label for="n5">Especialização</label></div>
+            <div class="pill"><input type="radio" name="nivel" id="n6" value="EaD"><label for="n6">EaD</label></div>
+            <div class="pill"><input type="radio" name="nivel" id="n7" value="Formação Continuada"><label for="n7">Formação Continuada</label></div>
+            <div class="pill"><input type="radio" name="nivel" id="n8" value="Livre"><label for="n8">Livre</label></div>
+          </div>
+          <span class="err-msg" id="e_nivel">Selecione o nível de ensino.</span>
+        </div>
+
+        <div class="fld">
+          <label>Tempo estimado de uso</label>
+          <select id="f_tempo">
+            <option value="">Não informado</option>
+            <option>Até 15 minutos</option><option>15 a 30 minutos</option>
+            <option>30 a 60 minutos</option><option>1 a 2 horas</option>
+            <option>Mais de 2 horas</option>
+          </select>
+        </div>
+
+        <div class="fld">
+          <label>Público-alvo</label>
+          <input type="text" id="f_publico" placeholder="Ex.: Estudantes do Técnico em Informática">
+        </div>
+
+      </div>
+    </div>
+    <div class="form-nav">
+      <button class="btn-back" onclick="goTo(1)">← Voltar</button>
+      <button class="btn-next" onclick="goTo(3)">Próximo — Descrição →</button>
+    </div>
+  </div>
+
+  <!-- ══ PÁGINA 3 — DESCRIÇÃO ══ -->
+  <div class="form-page" id="page3">
+    <div class="form-card">
+      <div class="card-title"><div class="ct-icon">📝</div> Descrição e Metadados</div>
+      <div class="fg">
+        <div class="fld full">
+          <label>Resumo / Descrição Pedagógica <span class="req">*</span></label>
+          <textarea id="f_desc" placeholder="Descreva o objetivo educacional, os conteúdos abordados e como o recurso pode ser utilizado em sala de aula ou em atividades de ensino-aprendizagem..." maxlength="1000" oninput="countChars(this,'cc_desc',1000)"></textarea>
+          <span class="char-count" id="cc_desc">0/1000 (mínimo 100 caracteres)</span>
+          <span class="err-msg" id="e_desc">A descrição precisa ter pelo menos 100 caracteres.</span>
+        </div>
+        <div class="fld full">
+          <label>Palavras-chave <span class="req">*</span> <span class="tip">separadas por vírgula</span></label>
+          <input type="text" id="f_keywords" placeholder="Ex.: redes, protocolos, TCP/IP, EPT, informática, técnico">
+          <span class="err-msg" id="e_keywords">Informe pelo menos uma palavra-chave.</span>
+        </div>
+        <div class="fld full">
+          <label>Referências e fontes consultadas <span class="tip">opcional</span></label>
+          <textarea id="f_refs" placeholder="Liste as referências bibliográficas ou fontes utilizadas na produção do REA..." style="min-height:70px" maxlength="500"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-nav">
+      <button class="btn-back" onclick="goTo(2)">← Voltar</button>
+      <button class="btn-next" onclick="goTo(4)">Próximo — Recurso →</button>
+    </div>
+  </div>
+
+  <!-- ══ PÁGINA 4 — RECURSO ══ -->
+  <div class="form-page" id="page4">
+    <div class="form-card">
+      <div class="card-title"><div class="ct-icon">📤</div> Acesso ao Recurso</div>
+
+      <div class="info-box" style="margin-bottom:1.2rem">
+        ℹ️ Informe <strong>pelo menos um</strong> dos campos abaixo: URL de acesso <strong>ou</strong> link do arquivo no Google Drive/OneDrive.
+      </div>
+
+      <div class="fg">
+        <div class="fld full">
+          <label>URL de acesso ao REA <span class="tip">YouTube, Google Drive, GitHub, Canva, Padlet...</span></label>
+          <input type="url" id="f_url" placeholder="https://...">
+          <span class="err-msg" id="e_url">Informe uma URL válida (deve começar com https://).</span>
+        </div>
+
+        <div class="or-div full">— ou compartilhe o link do arquivo —</div>
+
+        <div class="fld full">
+          <label>Link do arquivo no Google Drive / OneDrive <span class="tip">opcional</span></label>
+          <input type="url" id="f_drive" placeholder="https://drive.google.com/... ou https://1drv.ms/...">
+          <div class="info-box" style="margin-top:.5rem">
+            💡 Para compartilhar pelo Drive: clique com botão direito no arquivo → <strong>Compartilhar</strong> → <strong>Qualquer pessoa com o link</strong> → copie o link aqui.
+          </div>
+        </div>
+
+        <div class="fld full">
+          <label>URL da imagem de capa / thumbnail <span class="tip">opcional</span></label>
+          <input type="url" id="f_thumb" placeholder="https://... (link direto para a imagem)">
+        </div>
+      </div>
+    </div>
+    <div class="form-nav">
+      <button class="btn-back" onclick="goTo(3)">← Voltar</button>
+      <button class="btn-next" onclick="goTo(5)">Próximo — Licença →</button>
+    </div>
+  </div>
+
+  <!-- ══ PÁGINA 5 — LICENÇA ══ -->
+  <div class="form-page" id="page5">
+    <div class="form-card">
+      <div class="card-title"><div class="ct-icon">⚖️</div> Licença Creative Commons</div>
+
+      <div class="fg">
+        <div class="fld full">
+          <label>Escolha a licença do seu REA <span class="req">*</span></label>
+          <div class="pill-group" id="pg_licenca">
+            <div class="pill"><input type="radio" name="licenca" id="l1" value="CC BY — Atribuição"><label for="l1">🔓 CC BY</label></div>
+            <div class="pill"><input type="radio" name="licenca" id="l2" value="CC BY-SA — CompartilhaIgual"><label for="l2">🔁 CC BY-SA</label></div>
+            <div class="pill"><input type="radio" name="licenca" id="l3" value="CC BY-ND — SemDerivações"><label for="l3">🔒 CC BY-ND</label></div>
+            <div class="pill"><input type="radio" name="licenca" id="l4" value="CC BY-NC — NãoComercial"><label for="l4">💼 CC BY-NC</label></div>
+            <div class="pill"><input type="radio" name="licenca" id="l5" value="CC BY-NC-SA"><label for="l5">💼🔁 CC BY-NC-SA</label></div>
+            <div class="pill"><input type="radio" name="licenca" id="l6" value="CC BY-NC-ND"><label for="l6">💼🔒 CC BY-NC-ND</label></div>
+            <div class="pill"><input type="radio" name="licenca" id="l7" value="CC0 — Domínio Público"><label for="l7">🌐 CC0</label></div>
+          </div>
+          <span class="err-msg" id="e_licenca">Selecione uma licença Creative Commons.</span>
+        </div>
+
+        <div class="fld full" style="margin-top:.5rem">
+          <div class="declaracao">
+            <input type="checkbox" id="f_declara">
+            <label for="f_declara">
+              ✅ Declaro que este Recurso Educacional Aberto é de minha autoria ou que possuo autorização para publicá-lo com a licença selecionada, conforme os princípios dos Recursos Educacionais Abertos e a legislação de direitos autorais vigente no Brasil (Lei nº 9.610/1998).
+            </label>
+          </div>
+          <span class="err-msg" id="e_declara">Você precisa marcar a declaração de autoria para prosseguir.</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-nav">
+      <button class="btn-back" onclick="goTo(4)">← Voltar</button>
+      <button class="btn-next" onclick="goTo(6)">Revisar e Publicar →</button>
+    </div>
+  </div>
+
+  <!-- ══ PÁGINA 6 — REVISÃO ══ -->
+  <div class="form-page" id="page6">
+    <div class="form-card">
+      <div class="card-title"><div class="ct-icon">✅</div> Revisão — Confirme seus dados</div>
+      <div class="resumo-grid" id="resumoGrid"></div>
+    </div>
+    <div class="info-box" style="margin-bottom:1.2rem">
+      📧 Após enviar, você receberá uma confirmação por e-mail. Seus dados serão analisados pela Profa. Dra. Adriana Rocha Silva antes da publicação no repositório.
+    </div>
+    <div class="form-nav">
+      <button class="btn-back" onclick="goTo(5)">← Voltar e editar</button>
+      <button class="btn-submit" id="btnSubmit" onclick="submitForm()">
+        🚀 Publicar meu REA
+      </button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">🎉</div>
+    <h2>REA cadastrado com sucesso!</h2>
+    <p>Seu Recurso Educacional Aberto foi enviado para revisão da <strong>Profa. Dra. Adriana Rocha Silva</strong>. Após aprovação, será publicado no Repositório REA·EPT do IFPI.</p>
+    <p style="font-size:.85rem;color:#aaa">Verifique seu e-mail institucional para a confirmação do cadastro.</p>
+    <div class="success-actions">
+      <button class="btn-novo" onclick="resetForm()">➕ Cadastrar outro REA</button>
+      <a class="btn-repo" href="https://nucleostematicos.github.io/rea-ept" target="_blank">📚 Ver repositório</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>REA·EPT — Repositório de Recursos Educacionais Abertos</strong><br>
+  Disciplina Produção de Materiais Didáticos Digitais · Especialização EaD para EPT<br>
+  Orientação: <strong>Profa. Dra. Adriana Rocha Silva</strong> · Instituto Federal do Piauí — IFPI<br>
+  <span style="font-size:.72rem;opacity:.6">Metadados baseados nos padrões Dublin Core + LOM · Licenças Creative Commons</span>
+</footer>
+
+<script>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NAVEGAÇÃO ENTRE PÁGINAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+let currentPage = 1;
+const totalPages = 6;
+
+function goTo(n) {
+  if (n > currentPage && !validatePage(currentPage)) return;
+  document.getElementById('page' + currentPage).classList.remove('active');
+  document.getElementById('ps' + currentPage).classList.remove('active');
+  document.getElementById('ps' + currentPage).classList.add('done');
+
+  currentPage = n;
+  document.getElementById('page' + n).classList.add('active');
+  document.getElementById('ps' + n).classList.remove('done');
+  document.getElementById('ps' + n).classList.add('active');
+
+  const pct = Math.round((n / totalPages) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  if (n === 6) buildResumo();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   VALIDAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function validatePage(p) {
+  let ok = true;
+
+  const show = (id, show) => {
+    document.getElementById(id).classList.toggle('show', show);
+  };
+  const mark = (id, err) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('error', err);
+  };
+
+  if (p === 1) {
+    const titulo = v('f_titulo'); const ok1 = titulo.length >= 3;
+    mark('f_titulo', !ok1); show('e_titulo', !ok1); if (!ok1) ok = false;
+
+    const autor = v('f_autor'); const ok2 = autor.length >= 3;
+    mark('f_autor', !ok2); show('e_autor', !ok2); if (!ok2) ok = false;
+
+    const email = v('f_email'); const ok3 = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    mark('f_email', !ok3); show('e_email', !ok3); if (!ok3) ok = false;
+
+    const campus = v('f_campus'); const ok4 = campus !== '';
+    mark('f_campus', !ok4); show('e_campus', !ok4); if (!ok4) ok = false;
+
+    const data = v('f_data'); const ok5 = data !== '';
+    mark('f_data', !ok5); show('e_data', !ok5); if (!ok5) ok = false;
+  }
+
+  if (p === 2) {
+    const tipo = document.querySelector('input[name="tipo"]:checked');
+    show('e_tipo', !tipo); if (!tipo) ok = false;
+
+    const area = document.querySelector('input[name="area"]:checked');
+    show('e_area', !area); if (!area) ok = false;
+
+    const nivel = document.querySelector('input[name="nivel"]:checked');
+    show('e_nivel', !nivel); if (!nivel) ok = false;
+  }
+
+  if (p === 3) {
+    const desc = v('f_desc'); const ok1 = desc.length >= 100;
+    mark('f_desc', !ok1); show('e_desc', !ok1); if (!ok1) ok = false;
+
+    const kw = v('f_keywords'); const ok2 = kw.length >= 2;
+    mark('f_keywords', !ok2); show('e_keywords', !ok2); if (!ok2) ok = false;
+  }
+
+  if (p === 4) {
+    const url = v('f_url'); const drive = v('f_drive');
+    if (url && !url.startsWith('http')) {
+      mark('f_url', true); show('e_url', true); ok = false;
+    } else {
+      mark('f_url', false); show('e_url', false);
+    }
+    if (!url && !drive) {
+      mark('f_url', true); show('e_url', true); ok = false;
+    }
+  }
+
+  if (p === 5) {
+    const lic = document.querySelector('input[name="licenca"]:checked');
+    show('e_licenca', !lic); if (!lic) ok = false;
+
+    const decl = document.getElementById('f_declara').checked;
+    show('e_declara', !decl); if (!decl) ok = false;
+  }
+
+  return ok;
+}
+
+function v(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESUMO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function buildResumo() {
+  const tipo   = document.querySelector('input[name="tipo"]:checked');
+  const area   = document.querySelector('input[name="area"]:checked');
+  const nivel  = document.querySelector('input[name="nivel"]:checked');
+  const licenca= document.querySelector('input[name="licenca"]:checked');
+  const data   = v('f_data') ? new Date(v('f_data')+'T00:00:00').toLocaleDateString('pt-BR') : '—';
+
+  const items = [
+    { l: 'dc:title — Título', v: v('f_titulo'), full: true },
+    { l: 'dc:creator — Autor/a', v: v('f_autor') + (v('f_coautor') ? '; ' + v('f_coautor') : '') },
+    { l: 'E-mail', v: v('f_email') },
+    { l: 'dc:publisher — Campus', v: v('f_campus') },
+    { l: 'dc:type — Tipo/Formato', v: tipo ? tipo.value : '—' },
+    { l: 'dc:subject — Eixo/Área', v: area ? area.value : '—' },
+    { l: 'lom:educationalLevel', v: nivel ? nivel.value : '—' },
+    { l: 'dc:language — Idioma', v: v('f_idioma') || 'pt-BR' },
+    { l: 'dc:date — Data', v: data },
+    { l: 'dc:rights — Licença', v: licenca ? licenca.value : '—' },
+    { l: 'lom:typicalLearningTime', v: v('f_tempo') || 'Não informado' },
+    { l: 'lom:intendedEndUserRole', v: v('f_publico') || 'Não informado' },
+    { l: 'dc:description — Resumo', v: v('f_desc').substring(0, 120) + (v('f_desc').length > 120 ? '...' : ''), full: true },
+    { l: 'lom:keyword', v: v('f_keywords'), full: true },
+    { l: 'dc:identifier — URL', v: v('f_url') || v('f_drive') || 'Não informado', full: true },
+  ];
+
+  document.getElementById('resumoGrid').innerHTML = items.map(item => `
+    <div class="resumo-item${item.full ? ' full' : ''}">
+      <div class="ri-label">${item.l}</div>
+      <div class="ri-val">${escHtml(item.v) || '—'}</div>
+    </div>
+  `).join('');
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SUBMIT via FORMSPREE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+async function submitForm() {
+  if (!validatePage(5)) return;
+
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Enviando...';
+
+  const tipo    = document.querySelector('input[name="tipo"]:checked');
+  const area    = document.querySelector('input[name="area"]:checked');
+  const nivel   = document.querySelector('input[name="nivel"]:checked');
+  const licenca = document.querySelector('input[name="licenca"]:checked');
+
+  const payload = {
+    titulo:    v('f_titulo'),
+    autor:     v('f_autor'),
+    coautor:   v('f_coautor'),
+    email:     v('f_email'),
+    campus:    v('f_campus'),
+    inst:      v('f_inst'),
+    data:      v('f_data'),
+    idioma:    v('f_idioma'),
+    tipo:      tipo   ? tipo.value   : '',
+    area:      area   ? area.value   : '',
+    nivel:     nivel  ? nivel.value  : '',
+    tempo:     v('f_tempo'),
+    publico:   v('f_publico'),
+    descricao: v('f_desc'),
+    keywords:  v('f_keywords'),
+    refs:      v('f_refs'),
+    url:       v('f_url'),
+    drive:     v('f_drive'),
+    thumb:     v('f_thumb'),
+    licenca:   licenca ? licenca.value : '',
+  };
+
+  // ⚠️ Substitua pela URL do seu Google Apps Script
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyhON6xdYtSqs-nfeUvgaX8bKf1JEyNj8ApvzGpNuhhqlssr6C_hsIXp5DFpExOMkc5/exec';
+
+  try {
+    if (APPS_SCRIPT_URL === 'COLE_AQUI_A_URL_DO_SEU_APPS_SCRIPT') {
+      // Modo demonstração
+      await new Promise(r => setTimeout(r, 1500));
+      showSuccess();
+      return;
+    }
+
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      showSuccess();
+    } else {
+      throw new Error(json.error || 'Erro no servidor');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = '🚀 Publicar meu REA';
+    alert('❌ Erro ao enviar. Verifique sua conexão e tente novamente.\n\nSe o problema persistir, entre em contato com a Profa. Dra. Adriana Rocha Silva.');
+  }
+}
+
+function showSuccess() {
+  document.getElementById('page6').style.display = 'none';
+  document.getElementById('successScreen').classList.add('show');
+  document.querySelector('.form-progress').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetForm() {
+  document.querySelectorAll('input[type=text], input[type=email], input[type=url], input[type=date], textarea').forEach(el => el.value = '');
+  document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el => el.checked = false);
+  document.getElementById('f_inst').value = 'Instituto Federal do Piauí — IFPI';
+  document.getElementById('successScreen').classList.remove('show');
+  document.getElementById('page6').style.display = '';
+  document.querySelector('.form-progress').style.display = '';
+
+  document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ps-item').forEach(p => { p.classList.remove('active','done'); });
+  currentPage = 1;
+  document.getElementById('page1').classList.add('active');
+  document.getElementById('ps1').classList.add('active');
+  document.getElementById('progressBar').style.width = '16%';
+  document.getElementById('btnSubmit').disabled = false;
+  document.getElementById('btnSubmit').innerHTML = '🚀 Publicar meu REA';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   UTILITÁRIOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function countChars(el, countId, max) {
+  const n = el.value.length;
+  document.getElementById(countId).textContent =
+    countId === 'cc_desc'
+      ? `${n}/${max} (mínimo 100 caracteres)`
+      : `${n}/${max}`;
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Data máxima = hoje
+document.getElementById('f_data').max = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
